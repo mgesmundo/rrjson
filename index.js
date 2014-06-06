@@ -50,16 +50,16 @@
     return Array.isArray(ar);
   }
 
-  function isBoolean(arg) {
-    return typeof arg === 'boolean';
+  function isObject(arg) {
+    return typeof arg === 'object' && arg && !isArray(arg);
+  }
+
+  function isString(arg) {
+    return typeof arg === 'string';
   }
 
   function isRegExp(re) {
     return isObject(re) && objectToString(re) === '[object RegExp]';
-  }
-
-  function isObject(arg) {
-    return typeof arg === 'object' && arg && !isArray(arg);
   }
 
   function isDate(d) {
@@ -76,15 +76,11 @@
     return isNativeError(e) || (isObject(e) && e.hasOwnProperty('__isError__'));
   }
 
-  function isString(arg) {
-    return typeof arg === 'string';
-  }
-
   function serialize(regExp) {
     var flags = '';
-    if (regExp.global) flags += 'g';
-    if (regExp.multiline) flags += 'm';
-    if (regExp.ignoreCase) flags += 'i';
+    if (regExp.global) {flags += 'g';}
+    if (regExp.multiline) {flags += 'm';}
+    if (regExp.ignoreCase) {flags += 'i';}
     return [regExp.source, flags];
   }
 
@@ -95,14 +91,13 @@
   function safeClone(source, dest) {
     if (isObject(source)) {
       dest = dest || {};
-      var _source = source;
       if (isNativeError(source) && !isNativeError(dest)) {
         reviveError(source);
       }
       var key, value;
-      for (key in _source) {
-        if (_source.hasOwnProperty(key)) {
-          value = _source[key];
+      for (key in source) {
+        if (source.hasOwnProperty(key)) {
+          value = source[key];
           if (isObject(value)) {
             dest[key] = safeClone(value, dest[key]);
           } else {
@@ -116,44 +111,10 @@
     return dest;
   }
 
-  function stringOrArrayInObject(dest, type, ctx) {
-    if (isArray(dest) || isString(dest)) {
-      ctx = type;
-      type = dest;
-      dest = {};
-    }
-    if (!isObject(dest)) {
-      throw new Error('destination must be an object');
-    }
-    if (isArray(type)) {
-      type.forEach(function(t) {
-        switch (t.length) {
-          case 2:
-            dest[type] = t[1] || ctx;
-            break;
-          case 1:
-            dest[type] = ctx;
-            break;
-          default :
-            throw new Error('wrong array length');
-            break;
-        }
-      });
-    } else if (isString(type)) {
-      if (type.length = 0) {
-        throw new Error('empty string');
-      }
-      dest[type] = ctx;
-    } else {
-      throw new Error('wrong type: only array and string allowed');
-    }
-    return dest;
-  }
-
   function RRJSON(opts) {
     opts = opts || {};
-    this.prefixType  = '_t_'    || opts.prefixType;
-    this.prefixValue = '_v_'    || opts.prefixValue;
+    this.prefixType  = opts.prefixType  || '_t_';
+    this.prefixValue = opts.prefixValue || '_v_';
     this.noStack = opts.noStack || true;
     this.types = {};
   }
@@ -220,7 +181,7 @@
               }
             });
           } else if (isString(type)) {
-            if (type.length = 0) {
+            if (type.length === 0) {
               throw new Error('empty string');
             }
             dest[type] = ctx;
