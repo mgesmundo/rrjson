@@ -1,0 +1,34 @@
+{
+  "name": "rrjson",
+  "version": "1.0.0",
+  "description": "An easier JSON stringify and parse with reviver and replacer to preserve Error, Date, Array, RegExp and custom Object instances. It works both in Node and browser.",
+  "main": "index.js",
+  "scripts": {
+  "test": "mocha test/test.js --require should --reporter spec"
+},
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/mgesmundo/rrjson"
+},
+  "keywords": [
+    "json",
+    "reviver",
+    "replacer",
+    "error",
+    "object"
+    ],
+  "author": "Marcello Gesmundo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mgesmundo/rrjson/issues"
+  },
+    "dependencies": {
+  },
+  "devDependencies": {
+    "mocha": "^1.20.1",
+    "should": "~4.0.1"
+  },
+  "engines": {
+    "node": ">=0.10.28"
+  }
+}
