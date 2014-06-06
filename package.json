@@ -1,6 +1,6 @@
 {
   "name": "rrjson",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An easier JSON stringify and parse with reviver and replacer to preserve Error, Date, Array, RegExp and custom Object instances. It works both in Node and browser.",
   "main": "index.js",
   "scripts": {
