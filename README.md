@@ -25,18 +25,19 @@ console.log(rrjson.parse(rrjson.stringify(new Error('my message'))) instanceof E
 Is not possible to recreate an instance of a custom object if it requires some mandatory parameter. The internal state (private members) of the recreated object is wrong if is not provided a function to save and restore it.
 The function used to create the object instance MUST have a name for his constructor:
 
-    function MyBaseClass() {
-        // ...
-    }
-    // this object can recreated using strinfigy and parse
-    var obj = new MyBaseClass();
+```javascript
+function MyBaseClass() {
+    // ...
+}
+// this object can recreated using strinfigy and parse
+var obj = new MyBaseClass();
 
-    var MyBaseClass = function () {
-        // ...
-    };
-    // this object can't recreated using strinfigy and parse
-    var obj = new MyBaseClass();
-
+var MyBaseClass = function () {
+    // ...
+};
+// this object can't recreated using strinfigy and parse
+var obj = new MyBaseClass();
+```
 
 ## Installation
 
